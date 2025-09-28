@@ -23,7 +23,8 @@ jobs:
 
       # Step 3. 建置 Docker image
       - name: Build Docker image
-        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/shopping-client:latest .
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/shopping-client:latest -f Shopping/Shopping.Client/Dockerfile Shopping/Shopping.Client/
+
 
       # Step 4. 推送 image 到 Docker Hub
       - name: Push Docker image
