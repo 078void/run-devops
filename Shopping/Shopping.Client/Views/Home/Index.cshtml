@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Shopping.Client.Models.Product>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<h1>Welcome to the Shopping App!!!!!!!!!</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Description</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.Name</td>
+                <td>@product.Description</td>
+                <td>@product.Price.ToString("C")</td>
+            </tr>
+        }
+    </tbody>
+</table>
