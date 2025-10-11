@@ -7,6 +7,8 @@ D:\078void\run-devops\Shopping\Shopping.Client\bin\Release\net8.0\Shopping.Clien
 D:\078void\run-devops\Shopping\Shopping.Client\bin\Release\net8.0\Shopping.Client.runtimeconfig.json
 D:\078void\run-devops\Shopping\Shopping.Client\bin\Release\net8.0\Shopping.Client.dll
 D:\078void\run-devops\Shopping\Shopping.Client\bin\Release\net8.0\Shopping.Client.pdb
+D:\078void\run-devops\Shopping\Shopping.Client\bin\Release\net8.0\Newtonsoft.Json.dll
+D:\078void\run-devops\Shopping\Shopping.Client\obj\Release\net8.0\Shopping.Client.csproj.AssemblyReference.cache
 D:\078void\run-devops\Shopping\Shopping.Client\obj\Release\net8.0\rpswa.dswa.cache.json
 D:\078void\run-devops\Shopping\Shopping.Client\obj\Release\net8.0\Shopping.Client.GeneratedMSBuildEditorConfig.editorconfig
 D:\078void\run-devops\Shopping\Shopping.Client\obj\Release\net8.0\Shopping.Client.AssemblyInfoInputs.cache
@@ -15,6 +17,7 @@ D:\078void\run-devops\Shopping\Shopping.Client\obj\Release\net8.0\Shopping.Clien
 D:\078void\run-devops\Shopping\Shopping.Client\obj\Release\net8.0\Shopping.Client.MvcApplicationPartsAssemblyInfo.cache
 D:\078void\run-devops\Shopping\Shopping.Client\obj\Release\net8.0\Shopping.Client.RazorAssemblyInfo.cache
 D:\078void\run-devops\Shopping\Shopping.Client\obj\Release\net8.0\Shopping.Client.RazorAssemblyInfo.cs
+D:\078void\run-devops\Shopping\Shopping.Client\obj\Release\net8.0\Shopping.Client.sourcelink.json
 D:\078void\run-devops\Shopping\Shopping.Client\obj\Release\net8.0\rjimswa.dswa.cache.json
 D:\078void\run-devops\Shopping\Shopping.Client\obj\Release\net8.0\rjsmrazor.dswa.cache.json
 D:\078void\run-devops\Shopping\Shopping.Client\obj\Release\net8.0\rjsmcshtml.dswa.cache.json
@@ -26,6 +29,7 @@ D:\078void\run-devops\Shopping\Shopping.Client\obj\Release\net8.0\staticwebasset
 D:\078void\run-devops\Shopping\Shopping.Client\obj\Release\net8.0\staticwebassets.development.json
 D:\078void\run-devops\Shopping\Shopping.Client\obj\Release\net8.0\staticwebassets.build.endpoints.json
 D:\078void\run-devops\Shopping\Shopping.Client\obj\Release\net8.0\staticwebassets.upToDateCheck.txt
+D:\078void\run-devops\Shopping\Shopping.Client\obj\Release\net8.0\Shopping.A7D506CE.Up2Date
 D:\078void\run-devops\Shopping\Shopping.Client\obj\Release\net8.0\Shopping.Client.dll
 D:\078void\run-devops\Shopping\Shopping.Client\obj\Release\net8.0\refint\Shopping.Client.dll
 D:\078void\run-devops\Shopping\Shopping.Client\obj\Release\net8.0\Shopping.Client.pdb
