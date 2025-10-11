@@ -4,3 +4,11 @@ services:
     build:
       context: .
       dockerfile: Shopping.API/Dockerfile
+
+  shopping.client:
+    image: ${DOCKER_REGISTRY-}shoppingclient
+    build:
+      context: Shopping.Client
+      dockerfile: Dockerfile
+  shopping.db:
+    image: mongo
