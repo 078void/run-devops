@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shopping-client-deployment
+  labels:
+    app: shopping-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shopping-client
+  template:
+    metadata:
+      labels:
+        app: shopping-client
+    spec:
+      containers:
+      - name: shopping-client
+        image: 078void/shoppingclient:latest    # ← 您的 Docker Hub 映像
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080                   # ← .NET 8 預設埠號
+        env:
+        - name: ShoppingAPIUrl
+          valueFrom:
+            configMapKeyRef:
+              name: shopping-api-configmap
+              key: url
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "250m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: shopping-client-service
+spec:
+  type: NodePort                            # ← 對外開放
+  selector:
+    app: shopping-client
+  ports:
+  - protocol: TCP
+    port: 8001                                  # ← Service 埠號
+    targetPort: 8080                            # ← 容器埠號
+    nodePort: 30000                             # ← 本機訪問埠號

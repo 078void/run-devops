@@ -1,0 +1,57 @@
+# ===== Deployment 部分 =====
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shopping-api-deployment
+  labels:
+    app: shopping-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shopping-api
+  template:
+    metadata:
+      labels:
+        app: shopping-api
+    spec:
+      containers:
+      - name: shopping-api
+        image: 078void/shoppingapi:latest        # ← 從 Docker Hub 拉取
+        imagePullPolicy: IfNotPresent            # ← 拉取策略
+        ports:
+        - containerPort: 80
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
+        - name: DatabaseSettings__ConnectionString
+          # value: mongodb://mongo-service:27017   # ← 連接 MongoDB Service
+          # value: mongodb://username:password@mongo-service:27017   # ← 連接 MongoDB Service
+          valueFrom:
+            configMapKeyRef:
+              name: mongo-configmap
+              key: connection_string
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "250m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+
+---   # ← 分隔線
+
+# ===== Service 部分 =====
+apiVersion: v1
+kind: Service
+metadata:
+  name: shopping-api-service
+spec:
+  type: NodePort                    # ← 開發測試用
+  selector:
+    app: shopping-api               # ← 連接到 Deployment
+  ports:
+  - protocol: TCP
+    port: 8000                      # ← Service 埠號
+    targetPort: 8080                  # ← 容器內部埠號
+    nodePort: 31000                 # ← 外部訪問埠號（本機測試用）

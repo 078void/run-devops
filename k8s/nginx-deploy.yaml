@@ -1,0 +1,25 @@
+# 每個 YAML 檔案都有兩個主要部分：metadata 和 spec
+
+apiVersion: apps/v1              # API 版本
+kind: Deployment                 # 資源類型（Deployment, Service, Pod 等）
+
+metadata:                        # 第一層：Deployment 的元數據
+  name: nginx-deploy             # Deployment 名稱
+  
+spec:                           # 第一層：Deployment 的規格
+  replicas: 2                   # 副本數量
+  selector:
+    matchLabels:
+      app: nginx
+      
+  template:                     # Pod 模板定義
+    metadata:                   # 第二層：Pod 的元數據
+      labels:
+        app: nginx
+        
+    spec:                       # 第二層：Pod 的規格
+      containers:               # 容器定義
+      - name: nginx
+        image: nginx:1.16     # 映像檔名稱
+        ports:
+        - containerPort: 8080     # 容器埠號

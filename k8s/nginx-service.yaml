@@ -1,0 +1,14 @@
+apiVersion: v1           # Service 用 v1（不是 apps/v1）
+kind: Service            # 告訴 K8s 這是 Service
+
+metadata:
+  name: nginx-service    # Service 的名稱
+  
+spec:
+  selector:
+    app: nginx           # 🔑 重點：要和 Deployment 的 label 一樣
+    
+  ports:
+  - protocol: TCP
+    port: 80             # 對外的埠號
+    targetPort: 8080     # 轉發到 Pod 的埠號
