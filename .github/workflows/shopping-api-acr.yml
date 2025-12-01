@@ -26,7 +26,7 @@ jobs:
       - name: Build and push Docker image to ACR
         uses: docker/build-push-action@v5
         with:
-          context: ./Shopping/Shopping.API          # build context：專案資料夾
+          context: ./Shopping          # build context：專案資料夾
           file: ./Shopping/Shopping.API/Dockerfile  # Dockerfile 路徑（對應原本 dockerfilePath）
           push: true
           tags: |
