@@ -1,0 +1,117 @@
+@model Shopping.Client.Models.Product
+@{
+    ViewData["Title"] = "編輯商品";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <!-- 頁面標題 -->
+        <div class="mb-4">
+            <h1 class="display-5 text-warning">
+                <i class="bi bi-pencil-square"></i> 編輯商品
+            </h1>
+            <p class="text-muted">修改商品的資訊</p>
+        </div>
+
+        <!-- 商品表單 -->
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <form asp-action="Edit" method="post">
+                    @* 暫時移除 anti-forgery token 以解決 Docker 環境問題 *@
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+                    
+                    <!-- 隱藏的 ID 欄位 -->
+                    <input type="hidden" asp-for="Id" />
+
+                    <!-- 商品名稱 -->
+                    <div class="mb-3">
+                        <label asp-for="Name" class="form-label fw-bold">
+                            <i class="bi bi-tag"></i> 商品名稱 <span class="text-danger">*</span>
+                        </label>
+                        <input asp-for="Name" class="form-control form-control-lg" placeholder="請輸入商品名稱" />
+                        <span asp-validation-for="Name" class="text-danger small"></span>
+                    </div>
+
+                    <!-- 商品分類 -->
+                    <div class="mb-3">
+                        <label asp-for="Category" class="form-label fw-bold">
+                            <i class="bi bi-bookmark"></i> 商品分類
+                        </label>
+                        <select asp-for="Category" class="form-select form-select-lg">
+                            <option value="">請選擇分類</option>
+                            <option value="Smartphones">智慧型手機</option>
+                            <option value="Laptops">筆記型電腦</option>
+                            <option value="Tablets">平板電腦</option>
+                            <option value="Headphones">耳機</option>
+                            <option value="Accessories">配件</option>
+                            <option value="Other">其他</option>
+                        </select>
+                        <span asp-validation-for="Category" class="text-danger small"></span>
+                    </div>
+
+                    <!-- 商品描述 -->
+                    <div class="mb-3">
+                        <label asp-for="Description" class="form-label fw-bold">
+                            <i class="bi bi-card-text"></i> 商品描述
+                        </label>
+                        <textarea asp-for="Description" class="form-control" rows="4" placeholder="請輸入商品的詳細描述"></textarea>
+                        <span asp-validation-for="Description" class="text-danger small"></span>
+                    </div>
+
+                    <!-- 商品圖片 -->
+                    <div class="mb-3">
+                        <label asp-for="ImageFile" class="form-label fw-bold">
+                            <i class="bi bi-image"></i> 商品圖片檔名 <span class="text-muted small">(選填)</span>
+                        </label>
+                        <input asp-for="ImageFile" class="form-control" placeholder="例如：product.jpg（選填）" />
+                        <span asp-validation-for="ImageFile" class="text-danger small"></span>
+                        <div class="form-text">
+                            <i class="bi bi-info-circle"></i> 選填欄位 - 如果沒有圖片可以留空，圖片應存放在 wwwroot/images 目錄中
+                        </div>
+                    </div>
+
+                    <!-- 商品價格 -->
+                    <div class="mb-4">
+                        <label asp-for="Price" class="form-label fw-bold">
+                            <i class="bi bi-currency-dollar"></i> 商品價格 <span class="text-danger">*</span>
+                        </label>
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text">$</span>
+                            <input asp-for="Price" type="number" step="0.01" class="form-control" placeholder="0.00" />
+                        </div>
+                        <span asp-validation-for="Price" class="text-danger small"></span>
+                    </div>
+
+                    <!-- 操作按鈕 -->
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-between">
+                        <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-info btn-lg">
+                            <i class="bi bi-eye"></i> 查看詳情
+                        </a>
+                        <div class="d-flex gap-2">
+                            <a asp-action="Index" class="btn btn-secondary btn-lg">
+                                <i class="bi bi-x-circle"></i> 取消
+                            </a>
+                            <button type="submit" class="btn btn-warning btn-lg text-white">
+                                <i class="bi bi-save"></i> 儲存變更
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- 提示訊息 -->
+        <div class="alert alert-warning mt-3" role="alert">
+            <i class="bi bi-exclamation-triangle"></i> 
+            <strong>注意：</strong>修改後的資訊將會立即更新到系統中
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<!-- Bootstrap Icons CDN -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
