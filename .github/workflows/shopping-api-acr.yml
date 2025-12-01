@@ -1,0 +1,34 @@
+name: CI - Shopping API Docker to ACR
+
+on:
+  push:
+    branches:
+      - main   # 跟 azure-pipelines.yml 一樣，監聽 main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1. 抓程式碼
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2. 登入 Azure Container Registry
+      - name: Log in to Azure Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: shoppingdevops.azurecr.io
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+
+      # Step 3. Build & Push Docker image（對應原本的 Docker@2 buildAndPush）
+      - name: Build and push Docker image to ACR
+        uses: docker/build-push-action@v5
+        with:
+          context: ./Shopping/Shopping.API          # build context：專案資料夾
+          file: ./Shopping/Shopping.API/Dockerfile  # Dockerfile 路徑（對應原本 dockerfilePath）
+          push: true
+          tags: |
+            shoppingdevops.azurecr.io/voidrundevops:${{ github.run_number }}
+            shoppingdevops.azurecr.io/voidrundevops:latest
