@@ -1,0 +1,29 @@
+# Shopping API Auto Scaler
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: shopping-api-hpa
+spec:
+  maxReplicas: 10                    # 最大 Pod 數量
+  minReplicas: 2                     # 最小 Pod 數量 (整數)
+  scaleTargetRef:                    # 擴展目標
+    apiVersion: apps/v1
+    kind: Deployment
+    name: shopping-api-deployment    # 目標 Deployment
+  targetCPUUtilizationPercentage: 50 # CPU 使用率閾值
+
+---
+
+# Shopping Client Auto Scaler
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler # HPA 資源類型
+metadata:
+  name: shopping-client-hpa  # HPA 的名稱
+spec:
+  maxReplicas: 10 # 最大 Pod 數量
+  minReplicas: 3 # 最小 Pod 數量
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: shopping-client-deployment
+  targetCPUUtilizationPercentage: 50

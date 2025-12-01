@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shopping-client-deployment
+  labels:
+    app: shopping-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shopping-client
+  template:
+    metadata:
+      labels:
+        app: shopping-client
+    spec:
+      imagePullSecrets:              # ← 新增這部分
+        - name: acr-secret             # ← Secret 名稱
+      containers:
+      - name: shopping-client
+        # image: 078void/shoppingclient:latest    # ← 您的 Docker Hub 映像
+        image: shoppingdevops.azurecr.io/shopping-client:v1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080                   # ← .NET 8 預設埠號
+        env:
+        - name: ShoppingAPIUrl
+          valueFrom:
+            configMapKeyRef:
+              name: shopping-api-configmap
+              key: url
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "0.1"
+          limits:
+            memory: "256Mi"
+            cpu: "0.3"
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: shopping-client-service
+spec:
+  # type: NodePort                            # ← 對外開放
+  type: LoadBalancer          # ← 改為 LoadBalancer
+  selector:
+    app: shopping-client
+  ports:
+  - protocol: TCP
+    port: 80                  # ← 標準 HTTP 端口
+    # targetPort: 80         # ← 省略（與 port 相同）
+    targetPort: 8080          # ← 修改這裡！指向容器的 8080 端口

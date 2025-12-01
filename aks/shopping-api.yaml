@@ -1,0 +1,60 @@
+# ===== Deployment 部分 =====
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shopping-api-deployment
+  labels:
+    app: shopping-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shopping-api
+  template:
+    metadata:
+      labels:
+        app: shopping-api
+    spec:
+      imagePullSecrets:              # ← 新增這部分
+        - name: acr-secret             # ← Secret 名稱
+      containers:
+      - name: shopping-api
+        # image: 078void/shoppingapi:latest        # ← 從 Docker Hub 拉取
+        image: shoppingdevops.azurecr.io/shopping-api:v1  # ✅ ACR 地址
+        imagePullPolicy: IfNotPresent            # ← 拉取策略
+        ports:
+        - containerPort: 80
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
+        - name: DatabaseSettings__ConnectionString
+          # value: mongodb://mongo-service:27017   # ← 連接 MongoDB Service
+          # value: mongodb://username:password@mongo-service:27017   # ← 連接 MongoDB Service
+          valueFrom:
+            configMapKeyRef:
+              name: mongo-configmap
+              key: connection_string
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "0.1"
+          limits:
+            memory: "256Mi"
+            cpu: "0.3"
+
+---   # ← 分隔線
+
+# ===== Service 部分 =====
+apiVersion: v1
+kind: Service
+metadata:
+  name: shopping-api-service
+spec:
+  type: NodePort                    # ← 開發測試用
+  selector:
+    app: shopping-api               # ← 連接到 Deployment
+  ports:
+  - protocol: TCP
+    port: 80                  # ← 簡化為標準端口
+    # targetPort: 80         # ← 不需要（預設與 port 相同）
+    targetPort: 8080          # ← 修改這裡！指向容器的 8080 端口
